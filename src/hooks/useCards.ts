@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export interface CardData {
   _id: string;
@@ -13,32 +13,51 @@ export interface CardData {
 
 export function useCards() {
   const [cards, setCards] = useState<CardData[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchCards = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch("/api/cards");
-        if (!res.ok) throw new Error("Failed to fetch cards");
+  const fetchCards = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
 
-        const data: CardData[] = await res.json();
-        setCards(data);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("Something went wrong");
-        }
-        setCards([]);
-      } finally {
-        setLoading(false);
+      const res = await fetch("/api/cards");
+      if (!res.ok) throw new Error("Failed to fetch cards");
+
+      const data: CardData[] = await res.json();
+      setCards(data);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Something went wrong");
       }
-    };
-
-    fetchCards();
+      setCards([]);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  return { cards, loading, error };
+  useEffect(() => {
+    fetchCards();
+  }, [fetchCards]);
+
+  const deleteCard = async (id: string) => {
+    try {
+      const res = await fetch(`/api/cards?id=${id}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error("Failed to delete card");
+
+      fetchCards();
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Something went wrong");
+      }
+    }
+  };
+
+  return { cards, loading, error, fetchCards, deleteCard };
 }
