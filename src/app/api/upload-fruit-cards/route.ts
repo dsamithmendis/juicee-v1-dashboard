@@ -15,7 +15,7 @@ export async function POST(req: Request) {
 
     const db = await connectToDB();
 
-    const result = await db.collection("images").insertOne({
+    const result = await db.collection("cards").insertOne({
       name: file.name,
       data: buffer,
       contentType: file.type,
