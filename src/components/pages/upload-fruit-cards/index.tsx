@@ -30,17 +30,18 @@ export default function UploadFruitCardPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#fff7ee] via-[#fcdcc9] to-[#fbb490] p-4">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">Upload an Image</h1>
-
+    <section className="flex flex-col items-center justify-center p-4">
       <form
         ref={formRef}
         onSubmit={handleSubmit}
-        className="bg-white p-6 rounded-xl shadow-md space-y-4 w-full max-w-md"
+        className="bg-white p-6 rounded-xl shadow-2xl space-y-4 w-full max-w-md"
       >
+        <h1 className="text-4xl font-extrabold my-5 text-gray-800 text-center">
+          Upload Fruit Card
+        </h1>
         <label className="flex items-center justify-start border-2 border-dashed border-gray-300 rounded-lg p-4 cursor-pointer hover:border-orange-500">
           <RiImageLine size={24} color="#9CA3AF" className="mr-2" />
-          <span className="text-gray-600">{fileName || "Choose a file"}</span>
+          <span className="text-gray-600">{fileName || "Choose an image"}</span>
           <input
             type="file"
             name="file"
@@ -64,8 +65,8 @@ export default function UploadFruitCardPage() {
         <button
           type="submit"
           disabled={loading}
-          className={`w-full px-4 py-2 rounded-lg text-white ${
-            loading ? "bg-gray-400" : "bg-orange-500 hover:bg-orange-600"
+          className={`w-full px-4 py-2 rounded-lg text-white cursor-pointer ${
+            loading ? "bg-gray-400" : "bg-pink-600 hover:bg-pink-700"
           }`}
         >
           {loading ? "Uploading..." : "Upload"}
@@ -73,6 +74,6 @@ export default function UploadFruitCardPage() {
       </form>
 
       {message && <p className="mt-4 text-gray-700">{message}</p>}
-    </div>
+    </section>
   );
 }

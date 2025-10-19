@@ -30,16 +30,15 @@ export default function UploadJuiceCardPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#fff7ee] via-[#fcdcc9] to-[#fbb490] px-4">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">
-        Upload Juice Card
-      </h1>
-
+    <section className="flex flex-col items-center justify-center px-4">
       <form
         ref={formRef}
         onSubmit={handleSubmit}
-        className="bg-white p-6 rounded-xl shadow-md space-y-4 w-full max-w-md"
+        className="bg-white p-6 rounded-xl shadow-2xl space-y-4 w-full max-w-md"
       >
+        <h1 className="text-4xl font-extrabold my-5 text-gray-800 text-center">
+          Upload Juice Card
+        </h1>
         <div>
           <label
             htmlFor="title"
@@ -53,7 +52,7 @@ export default function UploadJuiceCardPage() {
             name="title"
             placeholder="Enter title"
             required
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 outline-none"
+            className="text-gray-800 w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 outline-none"
           />
         </div>
 
@@ -69,7 +68,7 @@ export default function UploadJuiceCardPage() {
             name="description"
             placeholder="Enter description"
             required
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 outline-none"
+            className="text-gray-800 w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 outline-none"
           />
         </div>
 
@@ -86,7 +85,7 @@ export default function UploadJuiceCardPage() {
             name="price"
             placeholder="Enter price"
             required
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 outline-none"
+            className="text-gray-800 w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 outline-none"
           />
         </div>
 
@@ -117,7 +116,9 @@ export default function UploadJuiceCardPage() {
           type="submit"
           disabled={loading}
           className={`w-full px-4 py-2 rounded-lg text-white transition ${
-            loading ? "bg-gray-400" : "bg-orange-500 hover:bg-orange-600"
+            loading
+              ? "bg-gray-400"
+              : "bg-pink-600 hover:bg-pink-700 cursor-pointer"
           }`}
         >
           {loading ? "Uploading..." : "Upload"}
@@ -125,6 +126,6 @@ export default function UploadJuiceCardPage() {
       </form>
 
       {message && <p className="mt-4 text-gray-700">{message}</p>}
-    </div>
+    </section>
   );
 }

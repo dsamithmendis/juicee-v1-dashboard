@@ -38,7 +38,7 @@ export default function CardsPage() {
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#fff7ee] via-[#fcdcc9] to-[#fbb490] p-10">
+    <div className="p-10">
       <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
         Uploaded Cards
       </h1>
