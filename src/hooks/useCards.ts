@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export interface ImageData {
+export interface CardData {
   _id: string;
   name: string;
   title: string;
@@ -8,35 +8,37 @@ export interface ImageData {
   price: number;
   base64: string;
   contentType: string;
+  category: string;
 }
 
-export function useImages() {
-  const [images, setImages] = useState<ImageData[]>([]);
+export function useCards() {
+  const [cards, setCards] = useState<CardData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchImages = async () => {
+    const fetchCards = async () => {
       try {
         setLoading(true);
         const res = await fetch("/api/cards");
-        if (!res.ok) throw new Error("Failed to fetch images");
-        const data: ImageData[] = await res.json();
-        setImages(data);
+        if (!res.ok) throw new Error("Failed to fetch cards");
+
+        const data: CardData[] = await res.json();
+        setCards(data);
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err.message);
         } else {
           setError("Something went wrong");
         }
-        setImages([]);
+        setCards([]);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchImages();
+    fetchCards();
   }, []);
 
-  return { images, loading, error };
+  return { cards, loading, error };
 }
