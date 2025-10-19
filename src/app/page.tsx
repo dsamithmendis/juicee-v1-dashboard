@@ -8,7 +8,7 @@ export default function Home() {
 
   useEffect(() => {
     const pw = prompt("Enter password to view this page:");
-    const expected = process.env.NEXT_PUBLIC_SITE_PASSWORD;
+    const expected = process.env.SECRETS_SCAN_OMIT_PATHS;
     if (pw === expected) setAuthorized(true);
     else {
       alert("Access denied");
