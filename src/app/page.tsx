@@ -1,10 +1,12 @@
-import GalleryPage from "@/components/pages/gallery";
-import UploadPage from "@/components/pages/upload";
+import GalleryPage from "@/components/pages/cards";
+import UploadFruitPage from "@/components/pages/upload-fruit-cards";
+import UploadJuicePage from "@/components/pages/upload-juice-cards";
 
 export default function Home() {
   return (
     <>
-      <UploadPage />
+      <UploadFruitPage />
+      <UploadJuicePage />
       <GalleryPage />
     </>
   );

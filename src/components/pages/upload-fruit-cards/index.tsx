@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-export default function UploadPage() {
+export default function UploadFruitPage() {
   const [message, setMessage] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -9,7 +9,7 @@ export default function UploadPage() {
     const formData = new FormData(e.currentTarget);
     setMessage("Uploading...");
 
-    const res = await fetch("/api/upload", {
+    const res = await fetch("/api/upload-fruit-cards", {
       method: "POST",
       body: formData,
     });
