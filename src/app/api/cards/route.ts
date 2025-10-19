@@ -70,3 +70,46 @@ export async function DELETE(req: Request) {
     );
   }
 }
+
+export async function PUT(req: Request) {
+  try {
+    const body = await req.json();
+    const { id, name, title, description, price } = body;
+
+    if (!id) {
+      return NextResponse.json(
+        { error: "Card ID is required" },
+        { status: 400 }
+      );
+    }
+
+    const db = await connectToDB();
+
+    const result = await db.collection("cards").updateOne(
+      { _id: new ObjectId(id), category: "juice-card" },
+      {
+        $set: {
+          name,
+          title,
+          description,
+          price,
+        },
+      }
+    );
+
+    if (result.matchedCount === 0) {
+      return NextResponse.json(
+        { error: "Juice card not found or category mismatch" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({ message: "Juice card updated successfully" });
+  } catch (error) {
+    console.error("Error updating juice card:", error);
+    return NextResponse.json(
+      { error: "Failed to update juice card" },
+      { status: 500 }
+    );
+  }
+}
