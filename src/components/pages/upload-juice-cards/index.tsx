@@ -23,12 +23,15 @@ export default function UploadJuiceCardPage() {
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded-xl shadow-md space-y-4 w-full max-w-md"
       >
-        {/* Title */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">
+          <label
+            htmlFor="title"
+            className="block text-sm font-semibold text-gray-700 mb-1"
+          >
             Title
           </label>
           <input
+            id="title"
             type="text"
             name="title"
             placeholder="Enter title"
@@ -37,12 +40,15 @@ export default function UploadJuiceCardPage() {
           />
         </div>
 
-        {/* Description */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">
+          <label
+            htmlFor="description"
+            className="block text-sm font-semibold text-gray-700 mb-1"
+          >
             Description
           </label>
           <textarea
+            id="description"
             name="description"
             placeholder="Enter description"
             required
@@ -50,12 +56,15 @@ export default function UploadJuiceCardPage() {
           />
         </div>
 
-        {/* Price */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">
+          <label
+            htmlFor="price"
+            className="block text-sm font-semibold text-gray-700 mb-1"
+          >
             Price (LKR)
           </label>
           <input
+            id="price"
             type="number"
             name="price"
             placeholder="Enter price"
@@ -64,12 +73,15 @@ export default function UploadJuiceCardPage() {
           />
         </div>
 
-        {/* Image Upload */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">
+          <label
+            htmlFor="file"
+            className="block text-sm font-semibold text-gray-700 mb-1"
+          >
             Image
           </label>
           <input
+            id="file"
             type="file"
             name="file"
             accept="image/*"

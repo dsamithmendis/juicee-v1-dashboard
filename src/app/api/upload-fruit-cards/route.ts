@@ -23,7 +23,10 @@ export async function POST(req: Request) {
       category: "fruit-card",
     });
 
-    return NextResponse.json({ message: "✅ Image uploaded successfully", id: result.insertedId });
+    return NextResponse.json({
+      message: "✅ Image uploaded successfully",
+      id: result.insertedId,
+    });
   } catch (error: unknown) {
     let message = "❌ Upload failed";
     if (error instanceof Error) {
