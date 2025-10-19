@@ -2,6 +2,10 @@
 import Image from "next/image";
 import { useState } from "react";
 import { useCards, CardData } from "@/hooks/useCards";
+import { RiEditLine, RiDeleteBinLine } from "@remixicon/react";
+import Modal from "@/components/modals";
+import UploadJuiceCardPage from "@/components/pages/upload-juice-cards";
+import UploadFruitCardPage from "@/components/pages/upload-fruit-cards";
 
 interface FormData {
   title: string;
@@ -17,6 +21,7 @@ export default function CardsPage() {
     description: "",
     price: 0,
   });
+  const [modalType, setModalType] = useState<"fruit" | "juice" | null>(null);
 
   const startEdit = (card: CardData) => {
     setEditId(card._id);
@@ -39,47 +44,56 @@ export default function CardsPage() {
 
   return (
     <div className="p-10">
-      <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
-        Uploaded Cards
-      </h1>
+      <div className="flex justify-center items-center space-x-4 mb-8">
+        <h1 className="text-3xl font-bold text-gray-800">JUICEE Dashboard</h1>
+        <RiEditLine
+          className="text-gray-600 hover:text-gray-800 cursor-pointer"
+          size={28}
+          onClick={() => setModalType("juice")}
+        />
+        <RiDeleteBinLine
+          className="text-gray-600 hover:text-gray-800 cursor-pointer"
+          size={28}
+          onClick={() => setModalType("fruit")}
+        />
+      </div>
 
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white rounded-lg shadow-md">
           <thead className="bg-orange-100">
             <tr>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-800">
-                Image
-              </th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-800">
-                Title
-              </th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-800">
-                Description
-              </th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-800">
-                Category
-              </th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-800">
-                Price
-              </th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-800">
-                Action
-              </th>
+              {[
+                "Image",
+                "Title",
+                "Description",
+                "Category",
+                "Price",
+                "Action",
+              ].map((header) => (
+                <th
+                  key={header}
+                  className="px-6 py-3 text-left text-sm font-semibold text-gray-800"
+                >
+                  {header}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
             {cards.map((card: CardData) => (
-              <tr key={card._id} className="border-b hover:bg-gray-50">
+              <tr key={card._id} className="hover:bg-gray-50">
+                {/* Image */}
                 <td className="px-6 py-4">
                   <Image
                     src={card.base64}
                     alt="Card Image"
-                    width={120}
-                    height={120}
+                    width={1200}
+                    height={1200}
                     className="w-32 h-20 object-cover rounded-md"
                   />
                 </td>
 
+                {/* Title */}
                 <td className="px-6 py-4">
                   {editId === card._id ? (
                     <input
@@ -96,6 +110,7 @@ export default function CardsPage() {
                   )}
                 </td>
 
+                {/* Description */}
                 <td className="px-6 py-4">
                   {editId === card._id ? (
                     <input
@@ -113,10 +128,12 @@ export default function CardsPage() {
                   )}
                 </td>
 
+                {/* Category */}
                 <td className="px-6 py-4 text-gray-700 font-medium">
                   {card.category}
                 </td>
 
+                {/* Price */}
                 <td className="px-6 py-4 text-orange-600 font-bold">
                   {editId === card._id ? (
                     <input
@@ -135,6 +152,7 @@ export default function CardsPage() {
                   )}
                 </td>
 
+                {/* Action */}
                 <td className="px-6 py-4 space-x-2">
                   {editId === card._id ? (
                     <>
@@ -175,6 +193,12 @@ export default function CardsPage() {
           </tbody>
         </table>
       </div>
+
+      {/* Fullscreen Modal */}
+      <Modal isOpen={modalType !== null} onClose={() => setModalType(null)}>
+        {modalType === "fruit" && <UploadFruitCardPage />}
+        {modalType === "juice" && <UploadJuiceCardPage />}
+      </Modal>
     </div>
   );
 }
