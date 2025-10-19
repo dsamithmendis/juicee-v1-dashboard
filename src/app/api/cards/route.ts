@@ -16,7 +16,7 @@ interface ImageDoc {
 export async function GET() {
   try {
     const db = await connectToDB();
-    const images = await db.collection<ImageDoc>("images").find().toArray();
+    const images = await db.collection<ImageDoc>("cards").find().toArray();
 
     const formatted = images.map((img) => ({
       _id: img._id.toString(),

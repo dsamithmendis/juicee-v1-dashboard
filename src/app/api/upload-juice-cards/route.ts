@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     const buffer = Buffer.from(arrayBuffer);
 
     const db = await connectToDB();
-    await db.collection("images").insertOne({
+    await db.collection("cards").insertOne({
       title,
       description,
       price: parseFloat(price),
