@@ -45,11 +45,8 @@ export async function DELETE(req: Request) {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
 
-    if (!id) {
-      return NextResponse.json(
-        { error: "Card ID is required" },
-        { status: 400 }
-      );
+    if (!id || !ObjectId.isValid(id)) {
+      return NextResponse.json({ error: "Invalid Card ID" }, { status: 400 });
     }
 
     const db = await connectToDB();
@@ -76,26 +73,17 @@ export async function PUT(req: Request) {
     const body = await req.json();
     const { id, name, title, description, price } = body;
 
-    if (!id) {
-      return NextResponse.json(
-        { error: "Card ID is required" },
-        { status: 400 }
-      );
+    if (!id || !ObjectId.isValid(id)) {
+      return NextResponse.json({ error: "Invalid Card ID" }, { status: 400 });
     }
 
     const db = await connectToDB();
-
-    const result = await db.collection("cards").updateOne(
-      { _id: new ObjectId(id), category: "juice-card" },
-      {
-        $set: {
-          name,
-          title,
-          description,
-          price,
-        },
-      }
-    );
+    const result = await db
+      .collection("cards")
+      .updateOne(
+        { _id: new ObjectId(id as string), category: "juice-card" },
+        { $set: { name, title, description, price } }
+      );
 
     if (result.matchedCount === 0) {
       return NextResponse.json(

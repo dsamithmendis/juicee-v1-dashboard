@@ -1,10 +1,14 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useJuiceUpload } from "@/hooks/useJuiceCards";
+import { RiImageLine } from "@remixicon/react";
+import Image from "next/image";
 
 export default function UploadJuiceCardPage() {
   const { message, loading, uploadJuice } = useJuiceUpload();
   const formRef = useRef<HTMLFormElement>(null);
+  const [fileName, setFileName] = useState<string>("");
+  const [previewSrc, setPreviewSrc] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -14,9 +18,22 @@ export default function UploadJuiceCardPage() {
     uploadJuice(formData);
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      setFileName(file.name);
+      setPreviewSrc(URL.createObjectURL(file));
+    } else {
+      setFileName("");
+      setPreviewSrc("");
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#fff7ee] via-[#fcdcc9] to-[#fbb490] px-4">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">Upload an Image</h1>
+      <h1 className="text-3xl font-bold mb-6 text-gray-800">
+        Upload Juice Card
+      </h1>
 
       <form
         ref={formRef}
@@ -73,24 +90,29 @@ export default function UploadJuiceCardPage() {
           />
         </div>
 
-        <div>
-          <label
-            htmlFor="file"
-            className="block text-sm font-semibold text-gray-700 mb-1"
-          >
-            Image
-          </label>
+        <label className="flex items-center justify-start border-2 border-dashed border-gray-300 rounded-lg p-4 cursor-pointer hover:border-orange-500">
+          <RiImageLine size={24} color="#9CA3AF" className="mr-2" />
+          <span className="text-gray-600">{fileName || "Choose an image"}</span>
           <input
-            id="file"
             type="file"
             name="file"
             accept="image/*"
             required
-            className="w-full"
+            className="hidden"
+            onChange={handleFileChange}
           />
-        </div>
+        </label>
 
-        {/* Submit Button */}
+        {previewSrc && (
+          <Image
+            src={previewSrc}
+            alt="Preview"
+            width={1200}
+            height={1200}
+            className="w-full h-64 object-contain border rounded-md mt-2"
+          />
+        )}
+
         <button
           type="submit"
           disabled={loading}
