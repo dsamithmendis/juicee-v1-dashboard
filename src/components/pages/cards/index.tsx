@@ -12,7 +12,7 @@ interface ImageData {
   contentType: string;
 }
 
-export default function GalleryPage() {
+export default function CardsPage() {
   const [images, setImages] = useState<ImageData[]>([]);
 
   useEffect(() => {

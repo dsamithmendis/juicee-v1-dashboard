@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-export default function UploadFruitPage() {
+export default function UploadFruitCardPage() {
   const [message, setMessage] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
