@@ -3,7 +3,7 @@ import "@/styles/global.css";
 
 export const metadata: Metadata = {
   title: "Juicee",
-  description: "Juicee dashboard application",
+  description: "Juicee Dashboard",
 };
 
 export default function RootLayout({
