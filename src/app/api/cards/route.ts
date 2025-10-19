@@ -33,6 +33,40 @@ export async function GET() {
     return NextResponse.json(formatted);
   } catch (error) {
     console.error("Error fetching cards:", error);
-    return NextResponse.json({ error: "Failed to fetch cards" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch cards" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json(
+        { error: "Card ID is required" },
+        { status: 400 }
+      );
+    }
+
+    const db = await connectToDB();
+    const result = await db
+      .collection("cards")
+      .deleteOne({ _id: new ObjectId(id) });
+
+    if (result.deletedCount === 0) {
+      return NextResponse.json({ error: "Card not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ message: "Card deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting card:", error);
+    return NextResponse.json(
+      { error: "Failed to delete card" },
+      { status: 500 }
+    );
   }
 }
