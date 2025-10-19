@@ -6,6 +6,7 @@ import { RiAddLine } from "@remixicon/react";
 import Modal from "@/components/modals";
 import UploadJuiceCardPage from "@/components/pages/upload-juice-cards";
 import UploadFruitCardPage from "@/components/pages/upload-fruit-cards";
+import CardsTableSkeleton from "@/components/common/skeletons/cards-table-skeleton";
 
 interface FormData {
   title: string;
@@ -39,12 +40,11 @@ export default function CardsPage() {
     }
   };
 
-  if (loading)
-    return <p className="text-center text-gray-700 mt-20">Loading...</p>;
   if (error) return <p className="text-center text-red-500 mt-20">{error}</p>;
+  if (loading) return <CardsTableSkeleton rows={6} />;
 
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
+    <section className="p-8 bg-gray-50 min-h-screen">
       <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-8 space-y-4 md:space-y-0">
         <h1 className="text-4xl font-bold text-gray-800">JUICEE Dashboard</h1>
         <div className="flex space-x-3">
@@ -202,6 +202,6 @@ export default function CardsPage() {
         {modalType === "fruit" && <UploadFruitCardPage />}
         {modalType === "juice" && <UploadJuiceCardPage />}
       </Modal>
-    </div>
+    </section>
   );
 }
